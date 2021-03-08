@@ -1,47 +1,49 @@
-import React, { createContext, useContext, useState } from "react";
+import Login from "components/Login";
+import PrivateRoute from "components/PrivateRoute";
+import Protected from "components/Protected";
+import Public from "components/Public";
+import React, { createContext, useState } from "react";
 import {
-  HashRouter as Router,
+  BrowserRouter as Router,
   Switch,
   Route,
-  NavLink,
-  Redirect,
+  Link,
   useLocation,
 } from "react-router-dom";
-import "bootswatch/dist/cyborg/bootstrap.min.css";
-import "./App.css";
-import Header from "components/Header";
-import Login from "components/Login";
-import Public from "components/Public";
-import Protected from "components/Protected";
-import useProvideAuth from "useProvideAuth";
+import { ProvideAuth } from "useAuth";
+import AuthButton from "./components/AuthButton";
 
-const AuthContext = createContext(null);
-
-function App() {
-  const auth = useProvideAuth();
-  const location = useLocation();
+const App = () => {
   return (
-    <div className="App">
-      <AuthContext.Provider value={useProvideAuth()}>
-        <Router>
+    <ProvideAuth>
+      <Router>
+        <div>
+          <AuthButton />
+
+          <ul>
+            <li>
+              <Link to="/public">Public Page</Link>
+            </li>
+            <li>
+              <Link to="/protected">Protected Page</Link>
+            </li>
+          </ul>
+
           <Switch>
-            <Route path="/login" component={Login} />
-            <Route path="/" exact component={Public} />
-            {auth.user ? (
-              <Route path="/protected" component={Protected} />
-            ) : (
-              <Redirect
-                to={{
-                  pathname: "/login",
-                  state: { from: location },
-                }}
-              />
-            )}
+            <Route path="/public">
+              <Public />
+            </Route>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <PrivateRoute path="/protected">
+              <Protected />
+            </PrivateRoute>
           </Switch>
-        </Router>
-      </AuthContext.Provider>
-    </div>
+        </div>
+      </Router>
+    </ProvideAuth>
   );
-}
+};
 
 export default App;

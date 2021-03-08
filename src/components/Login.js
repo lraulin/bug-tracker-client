@@ -1,10 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { useHistory, useLocation } from "react-router-dom";
+import { useAuth } from "../useAuth";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const history = useHistory();
+  const location = useLocation();
+  const auth = useAuth();
+  // @ts-ignore
+  const { from } = location.state || { from: { pathname: "/" } };
+
+  const login = () => {
+    auth.signin(email, password, () => {
+      history.replace(from);
+    });
+  };
 
   const validateForm = () => {
     return email.length > 0 && password.length > 0;
@@ -34,7 +47,13 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
         </Form.Group>
-        <Button block size="lg" type="submit" disabled={!validateForm()}>
+        <Button
+          block
+          size="lg"
+          type="submit"
+          disabled={!validateForm()}
+          onClick={login}
+        >
           Login
         </Button>
       </Form>

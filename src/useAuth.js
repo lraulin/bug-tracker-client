@@ -1,5 +1,16 @@
-import { useState } from "react";
-import { login } from "api";
+import React, { createContext, useContext, useState } from "react";
+import { login } from "./api";
+
+const AuthContext = createContext(null);
+
+export const ProvideAuth = ({ children }) => {
+  const auth = useProvideAuth();
+  return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
+};
+
+export const useAuth = () => {
+  return useContext(AuthContext);
+};
 
 const useProvideAuth = () => {
   const [user, setUser] = useState(localStorage.getItem("user"));
@@ -42,5 +53,3 @@ const useProvideAuth = () => {
     signout,
   };
 };
-
-export default useProvideAuth;
