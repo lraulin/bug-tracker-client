@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { useHistory, useLocation } from "react-router-dom";
-import { useAuth } from "../useAuth";
+import { useAuth } from "auth";
 
 const Login = () => {
   const [email, setEmail] = useState("");

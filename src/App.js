@@ -10,8 +10,8 @@ import {
   Link,
   useLocation,
 } from "react-router-dom";
-import { ProvideAuth } from "useAuth";
-import AuthButton from "./components/AuthButton";
+import { ProvideAuth } from "auth";
+import AuthButton from "components/AuthButton";
 
 const App = () => {
   return (

@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
-import { useAuth } from "useAuth";
+import { useAuth } from "auth";
 
 const AuthButton = () => {
   let history = useHistory();
