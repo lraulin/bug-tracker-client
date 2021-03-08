@@ -1,5 +1,12 @@
-import React, { createContext, useState } from "react";
-import { HashRouter as Router, Switch, Route, NavLink } from "react-router-dom";
+import React, { createContext, useContext, useState } from "react";
+import {
+  HashRouter as Router,
+  Switch,
+  Route,
+  NavLink,
+  Redirect,
+  useLocation,
+} from "react-router-dom";
 import "bootswatch/dist/cyborg/bootstrap.min.css";
 import "./App.css";
 import Header from "components/Header";
@@ -11,6 +18,8 @@ import useProvideAuth from "useProvideAuth";
 const AuthContext = createContext(null);
 
 function App() {
+  const auth = useProvideAuth();
+  const location = useLocation();
   return (
     <div className="App">
       <AuthContext.Provider value={useProvideAuth()}>
@@ -18,7 +27,16 @@ function App() {
           <Switch>
             <Route path="/login" component={Login} />
             <Route path="/" exact component={Public} />
-            <Route path="/protected" component={Protected} />
+            {auth.user ? (
+              <Route path="/protected" component={Protected} />
+            ) : (
+              <Redirect
+                to={{
+                  pathname: "/login",
+                  state: { from: location },
+                }}
+              />
+            )}
           </Switch>
         </Router>
       </AuthContext.Provider>
