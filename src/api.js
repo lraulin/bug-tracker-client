@@ -22,3 +22,14 @@ export const login = async (email = "", password = "") => {
     console.error(error);
   }
 };
+
+export const createProject = async (name) => {
+  try {
+    const url = URL + "/projects";
+    const response = await axios.post(url, { name });
+    console.log(response);
+    return response;
+  } catch (error) {
+    console.error(error);
+  }
+};

@@ -4,6 +4,8 @@ import { useAuth } from "auth";
 
 function PrivateRoute({ children, ...rest }) {
   let auth = useAuth();
+  console.log("Private Route");
+  console.log(auth);
   return (
     <Route
       {...rest}

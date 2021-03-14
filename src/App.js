@@ -7,15 +7,16 @@ import {
   Route,
   Link,
   useLocation,
+  Redirect,
 } from "react-router-dom";
 import { ProvideAuth } from "auth";
-import AuthButton from "components/AuthButton";
 import Header from "components/Header";
 import "bootswatch/dist/cyborg/bootstrap.min.css";
 import "App.css";
 import Projects from "components/Projects";
 import Issues from "components/Issues";
 import NewProject from "components/NewProject";
+import Home from "components/Home";
 
 const App = () => {
   return (
@@ -23,8 +24,9 @@ const App = () => {
       <Router>
         <div>
           <Header></Header>
-
           <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/login" component={Login} />
             <PrivateRoute path="/projects">
               <Projects />
             </PrivateRoute>
